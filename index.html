@@ -1,13 +1,12 @@
-  <!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plant Seed Analyzer</title>
 <link rel="stylesheet" href="style.css">
-
-<!-- Chart.js CDN for radar chart -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -21,7 +20,7 @@
 <section class="hero">
     <div class="upload-section">
         <input type="file" id="seedImage" accept="image/*">
-        <button onclick="analyzeSeed()">Analyze Seed</button>
+        <button onclick="analyzeSeed()"><i class="fa fa-upload"></i> Analyze Seed</button>
     </div>
     <div id="preview"></div>
 </section>
@@ -31,16 +30,19 @@
     <h2>How It Works</h2>
     <div class="step-cards">
         <div class="card">
+            <i class="fa fa-image fa-2x"></i>
             <h3>1. Upload Seed Image</h3>
-            <p>Choose a clear photo of your seed.</p>
+            <p>Choose a clear photo of your seed for analysis.</p>
         </div>
         <div class="card">
+            <i class="fa fa-cogs fa-2x"></i>
             <h3>2. Click Analyze</h3>
-            <p>Let our system evaluate your seed automatically.</p>
+            <p>The system evaluates your seed automatically.</p>
         </div>
         <div class="card">
+            <i class="fa fa-chart-line fa-2x"></i>
             <h3>3. Get Quality Report</h3>
-            <p>See moisture, color, texture, size, and more!</p>
+            <p>See moisture, color, texture, size, and more in a radar chart.</p>
         </div>
     </div>
 </section>
@@ -55,6 +57,11 @@
 <!-- Footer -->
 <footer>
     <p>&copy; 2025 Your Name. All Rights Reserved.</p>
+    <div class="social-icons">
+        <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
 </footer>
 
 <script src="script.js"></script>
