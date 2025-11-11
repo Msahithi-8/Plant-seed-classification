@@ -1,4 +1,4 @@
- function analyzeSeeds() {
+function analyzeSeeds() {
     const fileInput = document.getElementById('seedImages');
     const previewDiv = document.getElementById('preview');
     const resultDiv = document.getElementById('result');
@@ -11,7 +11,7 @@
 
     const files = Array.from(fileInput.files);
 
-    // Show uploaded images
+    // Show uploaded images above
     previewDiv.innerHTML = files.map(f => `<img src="${URL.createObjectURL(f)}" alt="Seed Image">`).join('');
 
     function hashString(str) {
@@ -29,6 +29,7 @@
     const borderColors = ['rgba(76,175,80,1)', 'rgba(255,165,0,1)', 'rgba(33,150,243,1)'];
     const labels = ["Moisture", "Color", "Shape", "Size", "Texture", "Defects", "Brightness"];
 
+    // Build datasets for radar chart
     const datasets = files.map((file, index) => {
         const imageHash = hashString(file.name);
         const report = {
@@ -40,20 +41,20 @@
             "Defects": grades[(imageHash + 5) % 3],
             "Brightness": grades[(imageHash + 6) % 3]
         };
-
+        const dataValues = Object.values(report).map(grade => gradeValues[grade]);
         return {
             label: file.name,
-            data: Object.values(report).map(grade => gradeValues[grade]),
+            data: dataValues,
             backgroundColor: colors[index % colors.length],
-            borderColor: borderColors[index % borderColors.length],
+            borderColor: borderColors[index % colors.length],
             borderWidth: 3,
-            pointBackgroundColor: borderColors[index % borderColors.length],
+            pointBackgroundColor: borderColors[index % colors.length],
             pointBorderColor: 'white',
             pointHoverRadius: 7
         };
     });
 
-    // Show result section
+    // Show chart section
     resultDiv.style.display = "block";
 
     // Radar chart
@@ -94,7 +95,7 @@
         }
     });
 
-    // Generate text reports
+    // Generate seed characteristic cards
     reportsDiv.innerHTML = files.map((file, index) => {
         const imageHash = hashString(file.name);
         const report = {
@@ -122,4 +123,4 @@
             </ul>
         </div>`;
     }).join('');
- }
+}
