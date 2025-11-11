@@ -1,9 +1,6 @@
 function analyzeSeeds() {
     const fileInput = document.getElementById('seedImages');
-    const previewDiv = document.getElementById('preview');
-    const resultDiv = document.getElementById('result');
-    const reportsDiv = document.getElementById('seedReports');
-    const instantDiv = document.getElementById('instantCharacteristics');
+    const resultSection = document.getElementById('result-section');
 
     if (!fileInput.files.length) {
         alert("Please select at least one seed image!");
@@ -12,8 +9,18 @@ function analyzeSeeds() {
 
     const files = Array.from(fileInput.files);
 
-    // Show uploaded images
-    previewDiv.innerHTML = files.map(f => `<img src="${URL.createObjectURL(f)}" alt="Seed Image">`).join('');
+    const characteristics = [
+        "Moisture","Color","Shape","Size","Texture","Defects",
+        "Brightness","Uniformity","Edge Sharpness","Growth Stage",
+        "Color Uniformity","Shape Ratio","Size Consistency","Texture Smoothness",
+        "Defect Detection","Brightness/Luster","Weight","Hardness","Germination Potential",
+        "Seed Density","Seed Vitality","Seed Purity","Disease Resistance","Surface Smoothness",
+        "Oil Content","Seed Age","Nutrient Content","Protein Level","Starch Content",
+        "Seed Size Deviation","Hull Integrity","Shell Thickness","Cracks/Spots","Overall Quality Grade"
+    ];
+
+    const grades = ["High", "Medium", "Low"];
+    const gradeValues = { "High":100, "Medium":70, "Low":40 };
 
     function hashString(str) {
         let hash = 0;
@@ -24,77 +31,55 @@ function analyzeSeeds() {
         return Math.abs(hash);
     }
 
-    const grades = ["High", "Medium", "Low"];
-    const gradeValues = { "High": 100, "Medium": 70, "Low": 40 };
-    const colors = ['rgba(123,31,162,0.5)','rgba(142,36,170,0.5)','rgba(66,165,245,0.5)'];
-    const borderColors = ['rgba(123,31,162,1)','rgba(142,36,170,1)','rgba(66,165,245,1)'];
-    const labels = ["Moisture","Color","Shape","Size","Texture","Defects","Brightness","Uniformity","Edge Sharpness","Growth Stage","Color Uniformity","Shape Ratio","Size Consistency","Texture Smoothness","Defect Detection","Brightness/Luster"];
+    resultSection.innerHTML = '';
 
-    // Instant characteristics
-    instantDiv.innerHTML = files.map(file => {
+    files.forEach((file, index) => {
         const imageHash = hashString(file.name);
         const report = {};
-        labels.forEach((label,i)=>{
-            report[label]=grades[(imageHash+i)%3];
-        });
-        return `<div class="instant-card">
-            <h4>${file.name}</h4>
-            <ul>
-                ${labels.map(l=>`<li>${l}: ${report[l]}</li>`).join('')}
-            </ul>
-        </div>`;
-    }).join('');
+        characteristics.forEach((label,i)=> report[label] = grades[(imageHash+i)%3]);
 
-    // Radar chart datasets
-    const datasets = files.map((file,index)=>{
-        const imageHash = hashString(file.name);
-        const report = {};
-        labels.forEach((label,i)=>report[label]=grades[(imageHash+i)%3]);
-        const dataValues = Object.values(report).map(grade=>gradeValues[grade]);
-        return {
-            label:file.name,
-            data:dataValues,
-            backgroundColor: colors[index%colors.length],
-            borderColor:borderColors[index%colors.length],
-            borderWidth:3,
-            pointBackgroundColor:borderColors[index%colors.length],
-            pointBorderColor:'white',
-            pointHoverRadius:7
-        };
-    });
-
-    resultDiv.style.display="block";
-
-    const ctx = document.getElementById('radarChart').getContext('2d');
-    if(window.radarChartInstance) window.radarChartInstance.destroy();
-    window.radarChartInstance = new Chart(ctx,{
-        type:'radar',
-        data:{labels,datasets},
-        options:{
-            animation:{duration:1200},
-            scales:{r:{suggestedMin:0,suggestedMax:100,ticks:{stepSize:20},grid:{circular:true,color:'rgba(0,0,0,0.1)'}}},
-            plugins:{legend:{display:true},tooltip:{
-                callbacks:{label:function(context){
-                    const val=context.raw;
-                    if(val===100)return "High";
-                    if(val===70)return "Medium";
-                    return "Low";
-                }}
-            }}
-        }
-    });
-
-    // Detailed seed cards
-    reportsDiv.innerHTML = files.map((file,index)=>{
-        const imageHash = hashString(file.name);
-        const report = {};
-        labels.forEach((label,i)=>report[label]=grades[(imageHash+i)%3]);
-        return `<div class="seed-card">
+        // Result card
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'result-card';
+        cardDiv.innerHTML = `
             <img src="${URL.createObjectURL(file)}" alt="Seed Image">
-            <h4>${file.name}</h4>
-            <ul>
-                ${labels.map(l=>`<li>${l}: <span>${report[l]}</span></li>`).join('')}
-            </ul>
-        </div>`;
-    }).join('');
+            <ul>${characteristics.map(l=>`<li>${l}: <span>${report[l]}</span></li>`).join('')}</ul>
+            <canvas id="radarChart${index}"></canvas>
+        `;
+        resultSection.appendChild(cardDiv);
+
+        // Radar chart with gradient fill
+        const ctx = document.getElementById(`radarChart${index}`).getContext('2d');
+
+        // Create gradient
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(123,31,162,0.6)');
+        gradient.addColorStop(1, 'rgba(142,36,170,0.1)');
+
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: characteristics,
+                datasets: [{
+                    label: file.name,
+                    data: Object.values(report).map(g => gradeValues[g]),
+                    backgroundColor: gradient,
+                    borderColor: 'rgba(123,31,162,1)',
+                    borderWidth: 3,
+                    pointBackgroundColor: 'rgba(142,36,170,1)',
+                    pointBorderColor: '#fff'
+                }]
+            },
+            options:{
+                animation:{duration:1200},
+                scales:{r:{suggestedMin:0,suggestedMax:100,ticks:{stepSize:20},grid:{circular:true,color:'rgba(0,0,0,0.1)'}}},
+                plugins:{legend:{display:true},tooltip:{
+                    callbacks:{label:function(context){
+                        const val=context.raw;
+                        return val===100?"High":val===70?"Medium":"Low";
+                    }}
+                }}
+            }
+        });
+    });
 }
