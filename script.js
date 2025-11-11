@@ -1,4 +1,4 @@
-function analyzeSeed() {
+        function analyzeSeed() {
   const fileInput = document.getElementById('seedImage');
   const resultSection = document.getElementById('result');
   const previewDiv = document.getElementById('preview');
@@ -16,7 +16,7 @@ function analyzeSeed() {
   };
   reader.readAsDataURL(file);
 
-  // Dummy data (fake but realistic)
+  // Dummy seed data
   const seeds = [
     {
       name: "Wheat",
@@ -90,8 +90,19 @@ function analyzeSeed() {
     }
   ];
 
-  // Pick random seed details
-  const seed = seeds[Math.floor(Math.random() * seeds.length)];
+  // 🔒 Hash function (gives same number for same image)
+  function hashString(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      hash |= 0; // Convert to 32-bit integer
+    }
+    return Math.abs(hash);
+  }
+
+  // Get index based on filename (same file → same index)
+  const index = hashString(file.name) % seeds.length;
+  const seed = seeds[index];
 
   // Display results
   document.getElementById('result').innerHTML = `
@@ -110,4 +121,4 @@ function analyzeSeed() {
     <p><strong>Recommended Use:</strong> ${seed.use}</p>
   `;
   resultSection.classList.remove('hidden');
-} 
+        }
