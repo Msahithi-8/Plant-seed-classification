@@ -1,67 +1,117 @@
-* {
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
-
+ /* General page styling */
 body {
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(to right, #d7f2ba, #b5e48c);
-  color: #333;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
-header {
-  text-align: center;
-  padding: 20px;
+/* Header */
+h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
 }
 
-.upload-box {
-  text-align: center;
-  margin: 20px;
-}
-
+/* File input and button */
 input[type="file"] {
-  padding: 8px;
-  margin-right: 10px;
+    margin-top: 15px;
+    padding: 5px;
 }
 
 button {
-  padding: 8px 16px;
-  border: none;
-  background-color: #2b9348;
-  color: white;
-  cursor: pointer;
-  border-radius: 6px;
+    margin-left: 10px;
+    padding: 8px 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 button:hover {
-  background-color: #1b6f32;
+    background-color: #45a049;
 }
 
+/* Image preview */
 #preview img {
-  display: block;
-  margin: 20px auto;
-  width: 250px;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    max-width: 200px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
 }
 
+/* Result container */
 #result {
-  background: white;
-  width: 80%;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: left;
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 2px 2px 15px rgba(0,0,0,0.1);
 }
 
-.hidden {
-  display: none;
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
 }
 
-footer {
-  text-align: center;
-  background-color: #2b9348;
-  color: white;
-  padding: 10px;
+table th, table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f2f2f2;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Bar graph container */
+.bar-container {
+    width: 100px;
+    background-color: #eee;
+    height: 15px;
+    border-radius: 8px;
+    margin: 0 auto;
+}
+
+.bar-fill {
+    height: 15px;
+    border-radius: 8px;
+}
+
+/* Grades colors */
+.grade-high {
+    background-color: #4caf50; /* green */
+}
+
+.grade-medium {
+    background-color: #ff9800; /* orange */
+}
+
+.grade-low {
+    background-color: #f44336; /* red */
+}
+
+/* Responsive for mobile */
+@media screen and (max-width: 650px) {
+    #result {
+        width: 90%;
+        padding: 15px;
+    }
+
+    table th, table td {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .bar-container {
+        width: 80px;
+    }
 }
