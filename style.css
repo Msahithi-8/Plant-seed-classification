@@ -13,9 +13,12 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* File input and button */
+/* Upload section */
+.upload-section {
+    margin-bottom: 20px;
+}
+
 input[type="file"] {
-    margin-top: 15px;
     padding: 5px;
 }
 
@@ -47,7 +50,7 @@ button:hover {
 #result {
     text-align: left;
     margin: 20px auto;
-    max-width: 600px;
+    max-width: 650px;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
