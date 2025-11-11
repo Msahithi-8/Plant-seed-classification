@@ -1,4 +1,4 @@
-function analyzeSeeds() {
+ function analyzeSeeds() {
     const fileInput = document.getElementById('seedImages');
     const previewDiv = document.getElementById('preview');
     const resultDiv = document.getElementById('result');
@@ -26,11 +26,11 @@ function analyzeSeeds() {
 
     const grades = ["High", "Medium", "Low"];
     const gradeValues = { "High": 100, "Medium": 70, "Low": 40 };
-    const colors = ['rgba(76,175,80,0.5)', 'rgba(255,165,0,0.5)', 'rgba(33,150,243,0.5)'];
-    const borderColors = ['rgba(76,175,80,1)', 'rgba(255,165,0,1)', 'rgba(33,150,243,1)'];
+    const colors = ['rgba(255,110,196,0.5)', 'rgba(120,115,245,0.5)', 'rgba(66,230,149,0.5)'];
+    const borderColors = ['rgba(255,110,196,1)', 'rgba(120,115,245,1)', 'rgba(66,230,149,1)'];
     const labels = ["Moisture", "Color", "Shape", "Size", "Texture", "Defects", "Brightness"];
 
-    // Instant text characteristics
+    // Instant characteristics
     instantDiv.innerHTML = files.map(file => {
         const imageHash = hashString(file.name);
         const report = {
@@ -42,8 +42,7 @@ function analyzeSeeds() {
             "Defects": grades[(imageHash + 5) % 3],
             "Brightness": grades[(imageHash + 6) % 3]
         };
-        return `
-        <div class="instant-card">
+        return `<div class="instant-card">
             <h4>${file.name}</h4>
             <ul>
                 <li>Moisture: ${report.Moisture}</li>
@@ -58,7 +57,7 @@ function analyzeSeeds() {
     }).join('');
 
     // Radar chart datasets
-    const datasets = files.map((file, index) => {
+    const datasets = files.map((file,index)=>{
         const imageHash = hashString(file.name);
         const report = {
             "Moisture": grades[imageHash % 3],
@@ -69,55 +68,42 @@ function analyzeSeeds() {
             "Defects": grades[(imageHash + 5) % 3],
             "Brightness": grades[(imageHash + 6) % 3]
         };
-        const dataValues = Object.values(report).map(grade => gradeValues[grade]);
+        const dataValues = Object.values(report).map(grade=>gradeValues[grade]);
         return {
-            label: file.name,
-            data: dataValues,
-            backgroundColor: colors[index % colors.length],
-            borderColor: borderColors[index % colors.length],
-            borderWidth: 3,
-            pointBackgroundColor: borderColors[index % colors.length],
-            pointBorderColor: 'white',
-            pointHoverRadius: 7
+            label:file.name,
+            data:dataValues,
+            backgroundColor: colors[index%colors.length],
+            borderColor:borderColors[index%colors.length],
+            borderWidth:3,
+            pointBackgroundColor:borderColors[index%colors.length],
+            pointBorderColor:'white',
+            pointHoverRadius:7
         };
     });
 
-    resultDiv.style.display = "block";
+    resultDiv.style.display="block";
 
     const ctx = document.getElementById('radarChart').getContext('2d');
-    ctx.shadowColor = 'rgba(0,0,0,0.4)';
-    ctx.shadowBlur = 10;
-    ctx.shadowOffsetX = 5;
-    ctx.shadowOffsetY = 5;
-
-    if (window.radarChartInstance) window.radarChartInstance.destroy();
-
-    window.radarChartInstance = new Chart(ctx, {
-        type: 'radar',
-        data: { labels, datasets },
-        options: {
-            animation: { duration: 1200 },
-            scales: {
-                r: { suggestedMin: 0, suggestedMax: 100, grid: { color: 'rgba(0,0,0,0.1)', circular: true }, ticks: { stepSize: 20 } }
-            },
-            plugins: {
-                legend: { display: true },
-                tooltip: {
-                    callbacks: {
-                        label: function(context) {
-                            const value = context.raw;
-                            if (value === 100) return "High";
-                            if (value === 70) return "Medium";
-                            return "Low";
-                        }
-                    }
-                }
-            }
+    if(window.radarChartInstance) window.radarChartInstance.destroy();
+    window.radarChartInstance = new Chart(ctx,{
+        type:'radar',
+        data:{labels,datasets},
+        options:{
+            animation:{duration:1200},
+            scales:{r:{suggestedMin:0,suggestedMax:100,ticks:{stepSize:20},grid:{circular:true,color:'rgba(0,0,0,0.1)'}}},
+            plugins:{legend:{display:true},tooltip:{
+                callbacks:{label:function(context){
+                    const val=context.raw;
+                    if(val===100)return "High";
+                    if(val===70)return "Medium";
+                    return "Low";
+                }}
+            }}
         }
     });
 
-    // Detailed seed cards below radar
-    reportsDiv.innerHTML = files.map((file, index) => {
+    // Detailed seed cards
+    reportsDiv.innerHTML = files.map((file,index)=>{
         const imageHash = hashString(file.name);
         const report = {
             "Moisture": grades[imageHash % 3],
@@ -128,9 +114,7 @@ function analyzeSeeds() {
             "Defects": grades[(imageHash + 5) % 3],
             "Brightness": grades[(imageHash + 6) % 3]
         };
-
-        return `
-        <div class="seed-card">
+        return `<div class="seed-card">
             <img src="${URL.createObjectURL(file)}" alt="Seed Image">
             <h4>${file.name}</h4>
             <ul>
@@ -144,4 +128,4 @@ function analyzeSeeds() {
             </ul>
         </div>`;
     }).join('');
-}
+            }
