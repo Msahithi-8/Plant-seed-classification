@@ -3,28 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Plant Seed Analyzer</title>
+<title>🌱 Magical Plant Seed Analyzer</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
+<div class="particles"></div>
+
 <header>
-    <h1>🌱 Plant Seed Analyzer</h1>
-    <p class="subtitle">Upload seed images to get detailed quality reports instantly!</p>
+    <h1 class="gradient-text">🌱 Magical Plant Seed Analyzer</h1>
+    <p class="subtitle">Upload seed images and watch the magic happen!</p>
 </header>
+
+<section class="steps">
+    <h2>How It Works</h2>
+    <div class="step-cards">
+        <div class="card">
+            <i class="fa fa-image fa-2x"></i>
+            <h3>1. Upload Seed Images</h3>
+            <p>Select 1–3 clear photos of your seeds.</p>
+        </div>
+        <div class="card">
+            <i class="fa fa-cogs fa-2x"></i>
+            <h3>2. Click Analyze</h3>
+            <p>Watch the system evaluate your seeds magically.</p>
+        </div>
+        <div class="card">
+            <i class="fa fa-chart-line fa-2x"></i>
+            <h3>3. Get Quality Report</h3>
+            <p>See visual and detailed characteristics instantly.</p>
+        </div>
+    </div>
+</section>
 
 <section class="hero">
     <div class="upload-section">
         <input type="file" id="seedImages" accept="image/*" multiple>
-        <button onclick="analyzeSeeds()"><i class="fa fa-upload"></i> Analyze Seeds</button>
+        <button class="blink-button" onclick="analyzeSeeds()"><i class="fa fa-upload"></i> Analyze Seeds</button>
     </div>
 
-    <!-- Instant text characteristics -->
     <div id="instantCharacteristics" class="instant-characteristics"></div>
-
-    <div id="preview"></div>
+    <div id="preview" class="preview-images"></div>
 </section>
 
 <section id="result-section">
@@ -35,7 +56,6 @@
 </section>
 
 <footer>
-    <p>&copy; 2025 Your Name. All Rights Reserved.</p>
     <div class="social-icons">
         <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
         <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
