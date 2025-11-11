@@ -1,4 +1,4 @@
- function analyzeSeeds() {
+function analyzeSeeds() {
     const fileInput = document.getElementById('seedImages');
     const previewDiv = document.getElementById('preview');
     const resultDiv = document.getElementById('result');
@@ -26,32 +26,21 @@
 
     const grades = ["High", "Medium", "Low"];
     const gradeValues = { "High": 100, "Medium": 70, "Low": 40 };
-    const colors = ['rgba(255,110,196,0.5)', 'rgba(120,115,245,0.5)', 'rgba(66,230,149,0.5)'];
-    const borderColors = ['rgba(255,110,196,1)', 'rgba(120,115,245,1)', 'rgba(66,230,149,1)'];
-    const labels = ["Moisture", "Color", "Shape", "Size", "Texture", "Defects", "Brightness"];
+    const colors = ['rgba(123,31,162,0.5)','rgba(142,36,170,0.5)','rgba(66,165,245,0.5)'];
+    const borderColors = ['rgba(123,31,162,1)','rgba(142,36,170,1)','rgba(66,165,245,1)'];
+    const labels = ["Moisture","Color","Shape","Size","Texture","Defects","Brightness","Uniformity","Edge Sharpness","Growth Stage","Color Uniformity","Shape Ratio","Size Consistency","Texture Smoothness","Defect Detection","Brightness/Luster"];
 
     // Instant characteristics
     instantDiv.innerHTML = files.map(file => {
         const imageHash = hashString(file.name);
-        const report = {
-            "Moisture": grades[imageHash % 3],
-            "Color": grades[(imageHash + 1) % 3],
-            "Shape": grades[(imageHash + 2) % 3],
-            "Size": grades[(imageHash + 3) % 3],
-            "Texture": grades[(imageHash + 4) % 3],
-            "Defects": grades[(imageHash + 5) % 3],
-            "Brightness": grades[(imageHash + 6) % 3]
-        };
+        const report = {};
+        labels.forEach((label,i)=>{
+            report[label]=grades[(imageHash+i)%3];
+        });
         return `<div class="instant-card">
             <h4>${file.name}</h4>
             <ul>
-                <li>Moisture: ${report.Moisture}</li>
-                <li>Color: ${report.Color}</li>
-                <li>Shape: ${report.Shape}</li>
-                <li>Size: ${report.Size}</li>
-                <li>Texture: ${report.Texture}</li>
-                <li>Defects: ${report.Defects}</li>
-                <li>Brightness: ${report.Brightness}</li>
+                ${labels.map(l=>`<li>${l}: ${report[l]}</li>`).join('')}
             </ul>
         </div>`;
     }).join('');
@@ -59,15 +48,8 @@
     // Radar chart datasets
     const datasets = files.map((file,index)=>{
         const imageHash = hashString(file.name);
-        const report = {
-            "Moisture": grades[imageHash % 3],
-            "Color": grades[(imageHash + 1) % 3],
-            "Shape": grades[(imageHash + 2) % 3],
-            "Size": grades[(imageHash + 3) % 3],
-            "Texture": grades[(imageHash + 4) % 3],
-            "Defects": grades[(imageHash + 5) % 3],
-            "Brightness": grades[(imageHash + 6) % 3]
-        };
+        const report = {};
+        labels.forEach((label,i)=>report[label]=grades[(imageHash+i)%3]);
         const dataValues = Object.values(report).map(grade=>gradeValues[grade]);
         return {
             label:file.name,
@@ -105,27 +87,14 @@
     // Detailed seed cards
     reportsDiv.innerHTML = files.map((file,index)=>{
         const imageHash = hashString(file.name);
-        const report = {
-            "Moisture": grades[imageHash % 3],
-            "Color": grades[(imageHash + 1) % 3],
-            "Shape": grades[(imageHash + 2) % 3],
-            "Size": grades[(imageHash + 3) % 3],
-            "Texture": grades[(imageHash + 4) % 3],
-            "Defects": grades[(imageHash + 5) % 3],
-            "Brightness": grades[(imageHash + 6) % 3]
-        };
+        const report = {};
+        labels.forEach((label,i)=>report[label]=grades[(imageHash+i)%3]);
         return `<div class="seed-card">
             <img src="${URL.createObjectURL(file)}" alt="Seed Image">
             <h4>${file.name}</h4>
             <ul>
-                <li>Moisture: <span>${report.Moisture}</span></li>
-                <li>Color: <span>${report.Color}</span></li>
-                <li>Shape: <span>${report.Shape}</span></li>
-                <li>Size: <span>${report.Size}</span></li>
-                <li>Texture: <span>${report.Texture}</span></li>
-                <li>Defects: <span>${report.Defects}</span></li>
-                <li>Brightness: <span>${report.Brightness}</span></li>
+                ${labels.map(l=>`<li>${l}: <span>${report[l]}</span></li>`).join('')}
             </ul>
         </div>`;
     }).join('');
-            }
+}
