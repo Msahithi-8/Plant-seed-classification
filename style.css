@@ -1,120 +1,109 @@
- /* General page styling */
+/* General styling */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 20px;
+    font-family: 'Segoe UI', Arial, sans-serif;
     background-color: #f9f9f9;
+    margin: 0;
     color: #333;
 }
 
 /* Header */
-h1 {
-    color: #2c3e50;
-    margin-bottom: 20px;
-}
-
-/* Upload section */
-.upload-section {
-    margin-bottom: 20px;
-}
-
-input[type="file"] {
-    padding: 5px;
-}
-
-button {
-    margin-left: 10px;
-    padding: 8px 16px;
-    background-color: #4caf50;
+header {
+    text-align: center;
+    padding: 40px 20px 20px 20px;
+    background: linear-gradient(to right, #4caf50, #81c784);
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+header .subtitle {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* Hero / Upload Section */
+.hero {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.upload-section input[type="file"] {
+    padding: 10px;
+}
+
+.upload-section button {
+    padding: 10px 20px;
     font-size: 16px;
+    margin-left: 10px;
 }
 
-button:hover {
-    background-color: #45a049;
+/* Step cards */
+.steps {
+    text-align: center;
+    margin: 50px 0;
 }
 
-/* Image preview */
-#preview img {
-    max-width: 200px;
-    margin: 20px 0;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+.steps h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
 }
 
-/* Result container */
-#result {
-    text-align: left;
-    margin: 20px auto;
-    max-width: 650px;
+.step-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background-color: white;
     padding: 20px;
-    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 200px;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #4caf50;
+}
+
+.card p {
+    font-size: 14px;
+}
+
+/* Image Preview */
+#preview img {
+    max-width: 250px;
+    margin: 20px auto;
     border-radius: 10px;
-    box-shadow: 2px 2px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* Table styling */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+/* Result Table */
+#result {
+    max-width: 700px;
+    margin: 40px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
-table th, table td {
-    padding: 8px;
-    border: 1px solid #ddd;
-}
-
-table th {
-    background-color: #f2f2f2;
-    text-align: left;
-    font-weight: bold;
-}
-
-/* Bar graph container */
-.bar-container {
-    width: 100px;
-    background-color: #eee;
-    height: 15px;
-    border-radius: 8px;
-    margin: 0 auto;
-}
-
-.bar-fill {
-    height: 15px;
-    border-radius: 8px;
-}
-
-/* Grades colors */
-.grade-high {
-    background-color: #4caf50; /* green */
-}
-
-.grade-medium {
-    background-color: #ff9800; /* orange */
-}
-
-.grade-low {
-    background-color: #f44336; /* red */
-}
-
-/* Responsive for mobile */
-@media screen and (max-width: 650px) {
-    #result {
-        width: 90%;
-        padding: 15px;
-    }
-
-    table th, table td {
-        font-size: 14px;
-        padding: 6px;
-    }
-
-    .bar-container {
-        width: 80px;
-    }
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #2c3e50;
+    color: white;
 }
