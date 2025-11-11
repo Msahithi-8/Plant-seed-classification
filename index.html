@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -12,7 +12,7 @@
 
 <header>
     <h1>🌱 Plant Seed Analyzer</h1>
-    <p class="subtitle">Upload your seed images and compare quality instantly!</p>
+    <p class="subtitle">Upload seed images to get detailed quality reports instantly!</p>
 </header>
 
 <section class="hero">
@@ -20,33 +20,17 @@
         <input type="file" id="seedImages" accept="image/*" multiple>
         <button onclick="analyzeSeeds()"><i class="fa fa-upload"></i> Analyze Seeds</button>
     </div>
-    <div id="preview"></div>
-</section>
 
-<section class="steps">
-    <h2>How It Works</h2>
-    <div class="step-cards">
-        <div class="card">
-            <i class="fa fa-image fa-2x"></i>
-            <h3>1. Upload Seed Images</h3>
-            <p>Choose 1–3 clear photos of your seeds.</p>
-        </div>
-        <div class="card">
-            <i class="fa fa-cogs fa-2x"></i>
-            <h3>2. Click Analyze</h3>
-            <p>The system evaluates all seeds automatically.</p>
-        </div>
-        <div class="card">
-            <i class="fa fa-chart-line fa-2x"></i>
-            <h3>3. Compare Quality</h3>
-            <p>See all seeds’ radar charts in one view.</p>
-        </div>
-    </div>
+    <!-- Instant text characteristics -->
+    <div id="instantCharacteristics" class="instant-characteristics"></div>
+
+    <div id="preview"></div>
 </section>
 
 <section id="result-section">
     <div id="result" style="display:none;">
         <canvas id="radarChart"></canvas>
+        <div id="seedReports" class="seed-reports"></div>
     </div>
 </section>
 
