@@ -3,6 +3,7 @@ function analyzeSeeds() {
     const previewDiv = document.getElementById('preview');
     const resultDiv = document.getElementById('result');
     const reportsDiv = document.getElementById('seedReports');
+    const instantDiv = document.getElementById('instantCharacteristics');
 
     if (!fileInput.files.length) {
         alert("Please select at least one seed image!");
@@ -11,7 +12,7 @@ function analyzeSeeds() {
 
     const files = Array.from(fileInput.files);
 
-    // Show uploaded images above
+    // Show uploaded images
     previewDiv.innerHTML = files.map(f => `<img src="${URL.createObjectURL(f)}" alt="Seed Image">`).join('');
 
     function hashString(str) {
@@ -29,7 +30,34 @@ function analyzeSeeds() {
     const borderColors = ['rgba(76,175,80,1)', 'rgba(255,165,0,1)', 'rgba(33,150,243,1)'];
     const labels = ["Moisture", "Color", "Shape", "Size", "Texture", "Defects", "Brightness"];
 
-    // Build datasets for radar chart
+    // Instant text characteristics
+    instantDiv.innerHTML = files.map(file => {
+        const imageHash = hashString(file.name);
+        const report = {
+            "Moisture": grades[imageHash % 3],
+            "Color": grades[(imageHash + 1) % 3],
+            "Shape": grades[(imageHash + 2) % 3],
+            "Size": grades[(imageHash + 3) % 3],
+            "Texture": grades[(imageHash + 4) % 3],
+            "Defects": grades[(imageHash + 5) % 3],
+            "Brightness": grades[(imageHash + 6) % 3]
+        };
+        return `
+        <div class="instant-card">
+            <h4>${file.name}</h4>
+            <ul>
+                <li>Moisture: ${report.Moisture}</li>
+                <li>Color: ${report.Color}</li>
+                <li>Shape: ${report.Shape}</li>
+                <li>Size: ${report.Size}</li>
+                <li>Texture: ${report.Texture}</li>
+                <li>Defects: ${report.Defects}</li>
+                <li>Brightness: ${report.Brightness}</li>
+            </ul>
+        </div>`;
+    }).join('');
+
+    // Radar chart datasets
     const datasets = files.map((file, index) => {
         const imageHash = hashString(file.name);
         const report = {
@@ -54,10 +82,8 @@ function analyzeSeeds() {
         };
     });
 
-    // Show chart section
     resultDiv.style.display = "block";
 
-    // Radar chart
     const ctx = document.getElementById('radarChart').getContext('2d');
     ctx.shadowColor = 'rgba(0,0,0,0.4)';
     ctx.shadowBlur = 10;
@@ -72,12 +98,7 @@ function analyzeSeeds() {
         options: {
             animation: { duration: 1200 },
             scales: {
-                r: {
-                    suggestedMin: 0,
-                    suggestedMax: 100,
-                    grid: { color: 'rgba(0,0,0,0.1)', circular: true },
-                    ticks: { stepSize: 20 }
-                }
+                r: { suggestedMin: 0, suggestedMax: 100, grid: { color: 'rgba(0,0,0,0.1)', circular: true }, ticks: { stepSize: 20 } }
             },
             plugins: {
                 legend: { display: true },
@@ -95,7 +116,7 @@ function analyzeSeeds() {
         }
     });
 
-    // Generate seed characteristic cards
+    // Detailed seed cards below radar
     reportsDiv.innerHTML = files.map((file, index) => {
         const imageHash = hashString(file.name);
         const report = {
