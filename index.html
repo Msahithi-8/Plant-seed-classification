@@ -1,10 +1,13 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plant Seed Analyzer</title>
 <link rel="stylesheet" href="style.css">
+
+<!-- Chart.js CDN for radar chart -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -44,7 +47,9 @@
 
 <!-- Seed Quality Report Section -->
 <section id="result-section">
-    <div id="result" style="display:none;"></div>
+    <div id="result" style="display:none;">
+        <canvas id="radarChart"></canvas>
+    </div>
 </section>
 
 <!-- Footer -->
