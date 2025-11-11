@@ -1,0 +1,67 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #d7f2ba, #b5e48c);
+  color: #333;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+}
+
+.upload-box {
+  text-align: center;
+  margin: 20px;
+}
+
+input[type="file"] {
+  padding: 8px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  background-color: #2b9348;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+button:hover {
+  background-color: #1b6f32;
+}
+
+#preview img {
+  display: block;
+  margin: 20px auto;
+  width: 250px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#result {
+  background: white;
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.hidden {
+  display: none;
+}
+
+footer {
+  text-align: center;
+  background-color: #2b9348;
+  color: white;
+  padding: 10px;
+}
