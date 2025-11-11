@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -10,51 +10,46 @@
 </head>
 <body>
 
-<!-- Header -->
 <header>
     <h1>🌱 Plant Seed Analyzer</h1>
-    <p class="subtitle">Upload your seed image and get a complete quality report instantly!</p>
+    <p class="subtitle">Upload your seed images and compare quality instantly!</p>
 </header>
 
-<!-- Hero / Upload Section -->
 <section class="hero">
     <div class="upload-section">
-        <input type="file" id="seedImage" accept="image/*">
-        <button onclick="analyzeSeed()"><i class="fa fa-upload"></i> Analyze Seed</button>
+        <input type="file" id="seedImages" accept="image/*" multiple>
+        <button onclick="analyzeSeeds()"><i class="fa fa-upload"></i> Analyze Seeds</button>
     </div>
     <div id="preview"></div>
 </section>
 
-<!-- How it Works Section -->
 <section class="steps">
     <h2>How It Works</h2>
     <div class="step-cards">
         <div class="card">
             <i class="fa fa-image fa-2x"></i>
-            <h3>1. Upload Seed Image</h3>
-            <p>Choose a clear photo of your seed for analysis.</p>
+            <h3>1. Upload Seed Images</h3>
+            <p>Choose 1–3 clear photos of your seeds.</p>
         </div>
         <div class="card">
             <i class="fa fa-cogs fa-2x"></i>
             <h3>2. Click Analyze</h3>
-            <p>The system evaluates your seed automatically.</p>
+            <p>The system evaluates all seeds automatically.</p>
         </div>
         <div class="card">
             <i class="fa fa-chart-line fa-2x"></i>
-            <h3>3. Get Quality Report</h3>
-            <p>See moisture, color, texture, size, and more in a radar chart.</p>
+            <h3>3. Compare Quality</h3>
+            <p>See all seeds’ radar charts in one view.</p>
         </div>
     </div>
 </section>
 
-<!-- Seed Quality Report Section -->
 <section id="result-section">
     <div id="result" style="display:none;">
         <canvas id="radarChart"></canvas>
     </div>
 </section>
 
-<!-- Footer -->
 <footer>
     <p>&copy; 2025 Your Name. All Rights Reserved.</p>
     <div class="social-icons">
