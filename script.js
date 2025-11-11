@@ -26,7 +26,7 @@
     const grades = ["High", "Medium", "Low"];
     const imageHash = hashString(file.name);
 
-    // Dynamic seed quality report
+    // Expanded dynamic seed quality report
     const report = {
         "Moisture Level": grades[imageHash % 3],
         "Color Uniformity": grades[(imageHash + 1) % 3],
@@ -35,7 +35,14 @@
         "Texture Smoothness": grades[(imageHash + 4) % 3],
         "Edge Sharpness": grades[(imageHash + 5) % 3],
         "Defect Detection": grades[(imageHash + 6) % 3],
-        "Brightness / Luster": grades[(imageHash + 7) % 3]
+        "Brightness / Luster": grades[(imageHash + 7) % 3],
+        "Weight Uniformity": grades[(imageHash + 8) % 3],
+        "Hardness": grades[(imageHash + 9) % 3],
+        "Disease Presence": grades[(imageHash + 10) % 3],
+        "Germination Potential": grades[(imageHash + 11) % 3],
+        "Oil Content": grades[(imageHash + 12) % 3],
+        "Seed Coating": grades[(imageHash + 13) % 3],
+        "Seed Purity": grades[(imageHash + 14) % 3]
     };
 
     // Display results with colored bars
