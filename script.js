@@ -1,4 +1,4 @@
- function analyzeSeed() {
+       function analyzeSeed() {
     const fileInput = document.getElementById('seedImage');
     const previewDiv = document.getElementById('preview');
     const resultDiv = document.getElementById('result');
@@ -13,7 +13,7 @@
     // Show uploaded image
     previewDiv.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="Seed Image">`;
 
-    // Hash function for consistent grading per image
+    // Hash function for consistent grading
     function hashString(str) {
         let hash = 0;
         for (let i = 0; i < str.length; i++) {
@@ -24,49 +24,66 @@
     }
 
     const grades = ["High", "Medium", "Low"];
+    const gradeValues = { "High": 100, "Medium": 70, "Low": 40 };
     const imageHash = hashString(file.name);
 
-    // Expanded dynamic seed quality report
+    // Seed characteristics for radar chart
     const report = {
-        "Moisture Level": grades[imageHash % 3],
-        "Color Uniformity": grades[(imageHash + 1) % 3],
-        "Shape Ratio": grades[(imageHash + 2) % 3],
-        "Size Consistency": grades[(imageHash + 3) % 3],
-        "Texture Smoothness": grades[(imageHash + 4) % 3],
-        "Edge Sharpness": grades[(imageHash + 5) % 3],
-        "Defect Detection": grades[(imageHash + 6) % 3],
-        "Brightness / Luster": grades[(imageHash + 7) % 3],
-        "Weight Uniformity": grades[(imageHash + 8) % 3],
-        "Hardness": grades[(imageHash + 9) % 3],
-        "Disease Presence": grades[(imageHash + 10) % 3],
-        "Germination Potential": grades[(imageHash + 11) % 3],
-        "Oil Content": grades[(imageHash + 12) % 3],
-        "Seed Coating": grades[(imageHash + 13) % 3],
-        "Seed Purity": grades[(imageHash + 14) % 3]
+        "Moisture": grades[imageHash % 3],
+        "Color": grades[(imageHash + 1) % 3],
+        "Shape": grades[(imageHash + 2) % 3],
+        "Size": grades[(imageHash + 3) % 3],
+        "Texture": grades[(imageHash + 4) % 3],
+        "Defects": grades[(imageHash + 5) % 3],
+        "Brightness": grades[(imageHash + 6) % 3]
     };
 
-    // Display results with colored bars
-    let html = `<h2>🌾 Seed Quality Report</h2><table>`;
-    html += `<tr><th>Parameter</th><th>Grade</th><th>Graph</th></tr>`;
+    const labels = Object.keys(report);
+    const dataValues = Object.values(report).map(grade => gradeValues[grade]);
 
-    for (let param in report) {
-        let grade = report[param];
-        let barClass = grade === "High" ? "grade-high" : grade === "Medium" ? "grade-medium" : "grade-low";
-        let value = grade === "High" ? 100 : grade === "Medium" ? 70 : 40;
+    // Show result
+    resultDiv.style.display = "block";
 
-        html += `<tr>
-            <td>${param}</td>
-            <td>${grade}</td>
-            <td>
-                <div class="bar-container">
-                    <div class="bar-fill ${barClass}" style="width:${value}%"></div>
-                </div>
-            </td>
-        </tr>`;
-    }
+    // Create radar chart
+    const ctx = document.getElementById('radarChart').getContext('2d');
 
-    html += `</table>`;
+    // Destroy previous chart if exists
+    if (window.radarChartInstance) window.radarChartInstance.destroy();
 
-    resultDiv.innerHTML = html;
-    resultDiv.style.display = "block"; // Show report box
- }
+    window.radarChartInstance = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Seed Quality',
+                data: dataValues,
+                backgroundColor: 'rgba(76, 175, 80, 0.3)',
+                borderColor: 'rgba(76, 175, 80, 1)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(76, 175, 80, 1)'
+            }]
+        },
+        options: {
+            scales: {
+                r: {
+                    suggestedMin: 0,
+                    suggestedMax: 100,
+                    ticks: { stepSize: 20 }
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const value = context.raw;
+                            if (value === 100) return "High";
+                            if (value === 70) return "Medium";
+                            return "Low";
+                        }
+                    }
+                }
+            }
+        }
+    });
+       }
